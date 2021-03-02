@@ -8,7 +8,7 @@ namespace DirExtract
     internal class Program
     {
         private static System.Collections.Queue dirs = new System.Collections.Queue(), files = new System.Collections.Queue();
-        private static string outputPath;
+        private static string outputPath; //action deploy needs, will remove later on for efficiency.
         private static void Main(string[] args)
         {
         one:
@@ -27,10 +27,12 @@ namespace DirExtract
 
             foreach (string s in Directory.GetDirectories(Path, "", SearchOption.AllDirectories))
                 dirs.Enqueue(s);
-
-            Thread.Sleep(750);
+            //thread.Priority = ThreadPriority.AboveNormal;
+            Thread.Sleep(600);
             thread.Join();
-
+            //this section can be furthur optimised by moving this next function to the second thread.
+            //or rework second thread so that one goes first on operations.
+            
             System.Collections.Generic.List<string> TheList = new System.Collections.Generic.List<string>(32);
             while (files.Count > 0)
             {
@@ -38,19 +40,26 @@ namespace DirExtract
                 Console.WriteLine(temp);
                 TheList.Add(temp);
             }
-                
-
-            Console.WriteLine("\nFinished!");
+            //add in conditional for checking if there was any docx files later.
+            Console.WriteLine("\nFinished!\nNow whats the output directory\n");
+        Two:
             outputPath = Console.ReadLine();
-            foreach (string s in TheList)
+            if (!Directory.Exists(outputPath))
             {
-                Task task = Task.Factory.StartNew(DeployFile, s);
+                Console.WriteLine("This Directory doesnt exist!\n"); goto Two;
             }
+            Task[] tasks = new Task[TheList.Count];
+            for (int i = 0; i != tasks.Length-1; i++)
+            {//implement parallel for later.
+                tasks[i] = Task.Factory.StartNew(DeployFile, TheList[i]);
+            }
+            Task.WaitAll(tasks);
+            Console.WriteLine("All Done!");
         }
-
-        private static void GetFiles()
+        //Parallel Thread
+        private static void GetFiles() 
         {
-            Thread.Sleep(500);
+            Thread.Sleep(270);
             while (dirs.Count > 0)
             {
                 string temp = dirs.Dequeue().ToString();
@@ -58,7 +67,7 @@ namespace DirExtract
                 Console.Write('.');
             }
         }
-
+        //Action Tasks
         private static Action<object> QueueFiles = (object s) =>
         {
             foreach (string b in Directory.GetFiles(s as string))
@@ -66,11 +75,18 @@ namespace DirExtract
                 if (b.EndsWith(".docx"))
                     files.Enqueue(b);
             }
-            
         };
         private static Action<object> DeployFile = (object s) =>
         {
-            File.
-        };
+            try
+            {   //C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\DevClassRepo\B1
+                string name = Path.GetFileName(s as string);
+                string outputPoint = Path.Combine(outputPath, name);
+                File.Create(outputPoint);
+                File.Copy(s as string, outputPoint, true);
+                Console.WriteLine($"Success, Copy and Pasted: {s as string} to {outputPath}");
+            }
+            catch (Exception ex) { Console.WriteLine($"Failed, {ex.Message}"); }
+        };  
     }
 }
