@@ -9,6 +9,7 @@ namespace DirExtract
     {
         private static System.Collections.Queue dirs = new System.Collections.Queue(), files = new System.Collections.Queue();
         private static string outputPath; //action deploy needs, will remove later on for efficiency.
+        private static bool ready = false;
         private static void Main(string[] args)
         {
         one:
@@ -27,13 +28,15 @@ namespace DirExtract
 
             foreach (string s in Directory.GetDirectories(Path, "", SearchOption.AllDirectories))
                 dirs.Enqueue(s);
+            ready = true;
             //thread.Priority = ThreadPriority.AboveNormal;
             Thread.Sleep(600);
             thread.Join();
             //this section can be furthur optimised by moving this next function to the second thread.
             //or rework second thread so that one goes first on operations.
-            
-            System.Collections.Generic.List<string> TheList = new System.Collections.Generic.List<string>(32);
+            while (thread.IsAlive) { Thread.Sleep(100); }
+            Thread.Sleep(100);
+            System.Collections.Generic.List<string> TheList = new System.Collections.Generic.List<string>();
             while (files.Count > 0)
             {
                 string temp = files.Dequeue().ToString();
@@ -49,17 +52,19 @@ namespace DirExtract
                 Console.WriteLine("This Directory doesnt exist!\n"); goto Two;
             }
             Task[] tasks = new Task[TheList.Count];
-            for (int i = 0; i != tasks.Length-1; i++)
+            for (int i = 0; i <= tasks.Length-1; i++)
             {//implement parallel for later.
                 tasks[i] = Task.Factory.StartNew(DeployFile, TheList[i]);
             }
             Task.WaitAll(tasks);
             Console.WriteLine("All Done!");
+            Console.Read();
+            
         }
         //Parallel Thread
         private static void GetFiles() 
         {
-            Thread.Sleep(270);
+            while (ready is false) { Thread.Sleep(50); }
             while (dirs.Count > 0)
             {
                 string temp = dirs.Dequeue().ToString();
@@ -82,7 +87,7 @@ namespace DirExtract
             {   //C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\DevClassRepo\B1
                 string name = Path.GetFileName(s as string);
                 string outputPoint = Path.Combine(outputPath, name);
-                File.Create(outputPoint);
+                //File.Create(outputPoint);
                 File.Copy(s as string, outputPoint, true);
                 Console.WriteLine($"Success, Copy and Pasted: {s as string} to {outputPath}");
             }
