@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C11-D", "..\C11-D\C11-D.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Squid-Math", "..\Squid-Math\Squid-Math.csproj", "{80016F12-B65C-4282-925D-DE6EA6802E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirExtract", "..\DirExtract\DirExtract.csproj", "{64064B28-7CFD-4AD1-A145-4F5870017520}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DirExtract", "..\DirExtract\DirExtract.csproj", "{64064B28-7CFD-4AD1-A145-4F5870017520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{C450CE34-119B-4A35-AAAE-00A228AD42BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "..\TestConsole\TestConsole.csproj", "{21E9643A-817F-49FA-8D66-DEDF530E4348}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -32,6 +36,14 @@ Global
 		{64064B28-7CFD-4AD1-A145-4F5870017520}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64064B28-7CFD-4AD1-A145-4F5870017520}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64064B28-7CFD-4AD1-A145-4F5870017520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C450CE34-119B-4A35-AAAE-00A228AD42BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C450CE34-119B-4A35-AAAE-00A228AD42BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C450CE34-119B-4A35-AAAE-00A228AD42BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C450CE34-119B-4A35-AAAE-00A228AD42BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21E9643A-817F-49FA-8D66-DEDF530E4348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21E9643A-817F-49FA-8D66-DEDF530E4348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21E9643A-817F-49FA-8D66-DEDF530E4348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21E9643A-817F-49FA-8D66-DEDF530E4348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
