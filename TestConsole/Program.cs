@@ -11,23 +11,21 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            //add a switch statement for which console tests to do!
-            while (true)
+            Console.WriteLine("c\ns\ne\n");
+            one:   
+            switch (Console.Read())
             {
-                string x = Console.ReadLine();
-                !x.Contains('e') ? DoTest(x) : ;
+                case 'c' : C_PointTests();
+                    break;
+                case 's': DrawingShapes();
+                    break;
+                case 'e': Environment.Exit(0);
+                    break;
+                default:
+                    goto one;
             }
-            C_PointTests();
-            Console.WriteLine("\nEnd");
-            Console.ReadLine();
-        }
-
-        private static void DoTest(string x)
-        {
-            switch (x)
-            {
-
-            }
+            Console.WriteLine("\nEnd\nBut you can still Continue!");
+            goto one;
         }
 
         private static void C_PointTests()
@@ -70,6 +68,32 @@ namespace TestConsole
             Console.WriteLine("ptOne < ptTwo : {0}", ptOne < ptTwo);
             Console.WriteLine("ptOne > ptTwo : {0}", ptOne > ptTwo);
             Console.ReadLine();
+        }
+        private static void DrawingShapes()
+        {
+            Console.WriteLine("***** Fun with Conversions *****\n");
+            // Make a Rectangle.
+            Rectangle r = new Rectangle(15, 4);
+            Console.WriteLine(r.ToString());
+            r.Draw();
+            Console.WriteLine();
+            // Convert r into a Square,
+            // based on the height of the Rectangle.
+            Square s = (Square)r;
+            Console.WriteLine(s.ToString());
+            s.Draw();
+            Console.ReadLine();
+            // Convert Rectangle to Square to invoke method.
+            Rectangle rect = new Rectangle(10, 5);
+            DrawSquare((Square)rect);
+            Console.ReadLine();
+            return;
+
+            void DrawSquare(Square sq)
+            {
+                Console.WriteLine(sq.ToString());
+                sq.Draw();
+            }
         }
     }
 }

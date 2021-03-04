@@ -20,13 +20,18 @@ namespace Squid_Math.Tests
         [TestMethod()]
         public void ToStringTest()
         {
-            Assert.Fail();
+            Point p1 = new Point(7, 5);
+            Assert.AreEqual("[7, 5]", p1.ToString());
         }
 
         [TestMethod()]
         public void EqualsTest()
         {
-            Assert.Fail();
+            Point p1 = new Point(4, 9);
+            var p2 = new Point(4, 9);
+            Point p3 = new Point(4, 9);
+            bool test = p1 == p3;
+            Assert.IsTrue(test);
         }
 
         [TestMethod()]

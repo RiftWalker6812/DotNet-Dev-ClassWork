@@ -11,24 +11,7 @@ namespace Squid_Math
         
     }
 
-    public struct Rectangle
-    {
-        public int Width, Height;
-        public Rectangle(int w, int h) : this()
-        {
-            Width = w; Height = h;
-        }
-        //Remove Later on!
-        public void Draw()
-        {
-            for (int i = 0; i < Height; i++)
-            {
-                for (int j = 0; j < Width; j++)
-                    Console.WriteLine("*");
-                Console.WriteLine();
-            }
-        }
-    }
+    
 
     public class Point : IComparable<Point>
     {
@@ -44,12 +27,12 @@ namespace Squid_Math
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
+            return obj.ToString() == ToString();
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return ToString().GetHashCode();
         }
         
         public int CompareTo(Point other) => (X > other.X & Y > other.Y) ? 1 : (X < other.X & Y < other.Y) ? -1 : 0;
