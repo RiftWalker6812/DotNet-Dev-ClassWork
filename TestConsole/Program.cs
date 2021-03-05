@@ -65,6 +65,9 @@ namespace TestConsole
             Console.WriteLine("ptOne != ptTwo : {0}", ptOne != ptTwo);
             Console.ReadLine();
 
+            Console.WriteLine("HashCode of ptOne : {0}", ptOne.GetHashCode());
+            Console.ReadLine();
+
             Console.WriteLine("ptOne < ptTwo : {0}", ptOne < ptTwo);
             Console.WriteLine("ptOne > ptTwo : {0}", ptOne > ptTwo);
             Console.ReadLine();
@@ -87,6 +90,24 @@ namespace TestConsole
             Rectangle rect = new Rectangle(10, 5);
             DrawSquare((Square)rect);
             Console.ReadLine();
+            // Converting an int to a Square.
+            Square sq2 = (Square)90;
+            Console.WriteLine("sq2 = {0}", sq2);
+            // Converting a Square to an int.
+            int side = (int)sq2;
+            Console.WriteLine("Side length of sq2 = {0}", side);
+            Console.ReadLine();
+
+            Square s3 = new Square(83);
+            // Attempt to make an implicit cast?
+            Rectangle rect2 = s3;
+            Console.WriteLine("rect2 = {0}", rect2);
+            // Explicit cast syntax still OK!
+            Square s4 = new Square(3);
+            Rectangle rect3 = (Rectangle)s4; //redundant
+            Console.WriteLine("rect3 = {0}", rect3);
+            Console.ReadLine();
+
             return;
 
             void DrawSquare(Square sq)

@@ -25,7 +25,14 @@ namespace Squid_Math
         }
         public override string ToString()
         {
-            return string.Format("[Width = {0}; Height = {1}]", Width, Height);
+            return string.Format("[Width = {0}; Height = {1}]", Width, Height);
+
+        }
+        public static implicit operator Rectangle(Square s)
+        {
+            // Assume the length of the new Rectangle with
+            // (Length x 2).
+            return new Rectangle(s.Length, s.Length*2);
         }
     }
     public struct Square
@@ -49,9 +56,20 @@ namespace Squid_Math
         // into Squares.
         public static explicit operator Square(Rectangle r)
         {
-            Square s = new Square();
-            s.Length = r.Height;
+            var s = new Square
+            {
+                Length = r.Height
+            };
             return s;
         }
+        public static explicit operator Square(int sideLength)
+        {
+            var newSq = new Square
+            {
+                Length = sideLength
+            };
+            return newSq;
+        }
+        public static explicit operator int (Square s) => s.Length;
     }
 }

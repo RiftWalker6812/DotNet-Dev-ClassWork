@@ -27,7 +27,7 @@ namespace Squid_Math
 
         public override bool Equals(object obj)
         {
-            return obj.ToString() == ToString();
+            return obj.GetHashCode() == GetHashCode();
         }
 
         public override int GetHashCode()

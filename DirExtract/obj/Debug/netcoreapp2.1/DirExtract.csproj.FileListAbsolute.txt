@@ -9,3 +9,4 @@ C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Di
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\DirExtract\obj\Debug\netcoreapp2.1\DirExtract.AssemblyInfo.cs
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\DirExtract\obj\Debug\netcoreapp2.1\DirExtract.dll
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\DirExtract\obj\Debug\netcoreapp2.1\DirExtract.pdb
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\DirExtract\obj\Debug\netcoreapp2.1\DirExtract.genruntimeconfig.cache
