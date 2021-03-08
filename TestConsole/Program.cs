@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Squid_Math;
 
 namespace TestConsole
@@ -11,7 +8,7 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("c\ns\ne\n");
+            Console.WriteLine("c\ns\nx\na\nt\np\ne\n");
             one:   
             switch (Console.Read())
             {
@@ -19,7 +16,15 @@ namespace TestConsole
                     break;
                 case 's': DrawingShapes();
                     break;
+                case 'x': ExtensionTest();
+                    break;
+                case 'a': AnnoyingExtenTest();
+                    break;
+                case 't': AnonymousTests();
+                    break;
                 case 'e': Environment.Exit(0);
+                    break;
+                case 'p': PointerTests();
                     break;
                 default:
                     goto one;
@@ -116,5 +121,222 @@ namespace TestConsole
                 sq.Draw();
             }
         }
+        private static void ExtensionTest()
+        {
+            Console.WriteLine("***** Fun with Extension Methods *****\n");
+            // The int has assumed a new identity!
+            int myInt = 12345678;
+            myInt.DisplayDefiningAssembly();
+            // So has the DataSet!
+            System.Data.DataSet d = new System.Data.DataSet();
+            d.DisplayDefiningAssembly();
+            // And the SoundPlayer!
+            System.Media.SoundPlayer sp = new System.Media.SoundPlayer();
+            sp.DisplayDefiningAssembly();
+            // Use new integer functionality.
+            Console.WriteLine("Value of myInt: {0}", myInt);
+            Console.WriteLine("Reversed digits of myInt: {0}", myInt.ReverseDigits());
+            Console.ReadLine();
+        }
+        private static void AnnoyingExtenTest()
+        {
+            Console.WriteLine("***** Extending Interface Compatible Types *****\n");
+            // System.Array implements IEnumerable!
+            string[] data = { "Wow", "this", "is", "sort", "of", "annoying",
+                                "but", "in", "a", "weird", "way", "fun!"};
+            data.PrintDataAndBeep();
+            Console.WriteLine();
+            // List<T> implements IEnumerable!
+            List<int> myInts = new List<int>() { 10, 15, 20 };
+            myInts.PrintDataAndBeep();
+            Console.ReadLine();
+        }
+        private static void AnonymousTests()
+        {
+            Console.WriteLine("***** Fun with Anonymous Types *****\n");
+            // Make an anonymous type representing a car.
+            var myCar = new { Color = "Bright Pink", Make = "Saab", CurrentSpeed = 55 };
+            // Now show the color and make.
+            Console.WriteLine("My car is a {0} {1}.", myCar.Color, myCar.Make);
+            // Now call our helper method to build anonymous type via args.
+            BuildAnonType("BMW", "Black", 90);
+            Console.ReadLine();
+
+            Console.WriteLine("\n***** Fun with Anonymous Types *****\n");
+            // Make an anonymous type representing a car.
+            var myCar2 = new { Color = "Bright Pink", Make = "Saab", CurrentSpeed = 55 };
+            // Reflect over what the compiler generated.
+            ReflectOverAnonymousType(myCar2);
+            Console.ReadLine();
+            EqualityTest();
+            Console.ReadLine();
+            var purchaseItem = new
+            {
+                TimeBought = DateTime.Now,
+                ItemBought = new { Color = "Red", Make = "Saab", CurrentSpeed = 55 },
+                Price = 34.000
+            };
+            ReflectOverAnonymousType(purchaseItem);
+            return;
+
+            void BuildAnonType(string make, string color, int currSp)
+            {
+                // Build anon type using incoming args.
+                var car = new { Make = make, Color = color, Speed = currSp };
+                // Note you can now use this type to get the property data!
+                Console.WriteLine("You have a {0} {1} going {2} MPH",
+                car.Color, car.Make, car.Speed);
+                // Anon types have custom implementations of each virtual
+                // method of System.Object. For example:
+                Console.WriteLine("ToString() == {0}", car.ToString());
+            }
+            void ReflectOverAnonymousType(object obj)
+            {
+                Console.WriteLine("obj is an instance of: {0}", obj.GetType().Name);
+                Console.WriteLine("Base class of {0} is {1}",
+                obj.GetType().Name,
+                obj.GetType().BaseType);
+                Console.WriteLine("obj.ToString() == {0}", obj.ToString());
+                Console.WriteLine("obj.GetHashCode() == {0}", obj.GetHashCode());
+                Console.WriteLine();
+            }
+            void EqualityTest()
+            {
+                // Make 2 anonymous classes with identical name/value pairs.
+                var firstCar = new { Color = "Bright Pink", Make = "Saab", CurrentSpeed = 55 };
+                var secondCar = new { Color = "Bright Pink", Make = "Saab", CurrentSpeed = 55 };
+                // Are they considered equal when using Equals()?
+                if (firstCar.Equals(secondCar))
+                    Console.WriteLine("Same anonymous object!");
+                else
+                    Console.WriteLine("Not the same anonymous object!");
+                // Are they considered equal when using ==?
+                if (firstCar == secondCar)
+                    Console.WriteLine("Same anonymous object!");
+                else
+                    Console.WriteLine("Not the same anonymous object!");
+                // Are these objects the same underlying type?
+                if (firstCar.GetType().Name == secondCar.GetType().Name)
+                    Console.WriteLine("We are both the same type!");
+                else
+                    Console.WriteLine("We are different types!");
+                // Show all the details.
+                Console.WriteLine();
+                ReflectOverAnonymousType(firstCar);
+                ReflectOverAnonymousType(secondCar);
+            }
+        }
+
+        #region Unsafe Area...
+        unsafe static void PointerTests()
+        {
+            unsafe
+            {
+                int myInt = 10;
+                SquareIntPointer(&myInt);
+                Console.WriteLine("myint: {0}", myInt);
+            }
+
+            int myInt2 = 5;
+            // Compiler error! Must be in unsafe context!
+            SquareIntPointer(&myInt2);
+            Console.WriteLine("myInt: {0}", myInt2);
+
+            PrintValueAndAddress();
+
+            Console.WriteLine("***** Calling method with unsafe code *****");
+            // Values for swap.
+            int i = 10, j = 20;
+            // Swap values "safely."
+            Console.WriteLine("\n***** Safe swap *****");
+            Console.WriteLine("Values before safe swap: i = {0}, j = {1}", i, j);
+            SafeSwap(ref i, ref j);
+            Console.WriteLine("Values after safe swap: i = {0}, j = {1}", i, j);
+            // Swap values "unsafely."
+            Console.WriteLine("\n***** Unsafe swap *****");
+            Console.WriteLine("Values before unsafe swap: i = {0}, j = {1}", i, j);
+            unsafe { UnsafeSwap(&i, &j); }
+            Console.WriteLine("Values after unsafe swap: i = {0}, j = {1}", i, j);
+            Console.ReadLine();
+
+            UsePointerToPoint();
+
+            return;
+
+            unsafe void PrintValueAndAddress()
+            {
+                int myInt;
+                // Define an int pointer, and
+                // assign it the address of myInt.
+                int* ptrToMyInt = &myInt;
+                // Assign value of myInt using pointer indirection.
+                *ptrToMyInt = 123;
+                // Print some stats.
+                Console.WriteLine("\nValue of myInt {0}", myInt);
+                Console.WriteLine("Address of myInt {0:X}", (int)&ptrToMyInt);
+            }
+        }
+        struct Point2
+        {
+            public int x;
+            public int y;
+            public override string ToString()
+            {
+                return string.Format("({0}, {1})", x, y);
+            }
+        }
+        unsafe static void UsePointerToPoint()
+        {
+            Console.WriteLine("\nField access via pointers");
+            // Access members via pointer.
+            Point2 point;
+            Point2* p = &point;
+            p->x = 100;
+            p->y = 200;
+            Console.WriteLine(p->ToString());
+            // Access members via pointer indirection.
+            Point2 point2;
+            Point2* p2 = &point2;
+            (*p2).x = 100;
+            (*p2).y = 200;
+            Console.WriteLine((*p2).ToString());
+        }
+        // This entire structure is "unsafe" and can
+        // be used only in an unsafe context.
+        unsafe struct Node
+        {
+            public int Value;
+            public Node* Left;
+            public Node* Right;
+        }
+        // This struct is safe, but the Node2* members
+        // are not. Technically, you may access "Value" from
+        // outside an unsafe context, but not "Left" and "Right".
+        public struct Node2
+        {
+            public int Value;
+            // These can be accessed only in an unsafe context!
+            public unsafe Node2* Left;
+            public unsafe Node2* Right;
+        }
+        unsafe static void SquareIntPointer(int* myIntPointer)
+        {
+            // Square the value just for a test.
+            *myIntPointer *= *myIntPointer;
+        }
+        unsafe public static void UnsafeSwap(int* i, int* j)
+        {
+            int temp = *i;
+            *i = *j;
+            *j = temp;
+        }
+        public static void SafeSwap(ref int i, ref int j)
+        {
+            int temp = i;
+            i = j;
+            j = temp;
+        }
+
+        #endregion
     }
 }
