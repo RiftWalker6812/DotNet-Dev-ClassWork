@@ -264,7 +264,7 @@ namespace TestConsole
             UnsafeStackAlloc();
             UseAndPinPoint();
             UseSizeOfOperator();
-
+            
             return;
 
             unsafe void PrintValueAndAddress()

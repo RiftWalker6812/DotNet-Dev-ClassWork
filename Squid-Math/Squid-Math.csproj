@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shapes.cs" />
+    <Compile Include="ShapesLib\3D_Geometry.cs" />
+    <Compile Include="ShapesLib\Shapes.cs" />
     <Compile Include="S_Math.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
