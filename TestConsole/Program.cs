@@ -4,7 +4,7 @@ using Squid_Math;
 
 namespace TestConsole
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
@@ -261,6 +261,10 @@ namespace TestConsole
 
             UsePointerToPoint();
 
+            UnsafeStackAlloc();
+            UseAndPinPoint();
+            UseSizeOfOperator();
+
             return;
 
             unsafe void PrintValueAndAddress()
@@ -276,67 +280,6 @@ namespace TestConsole
                 Console.WriteLine("Address of myInt {0:X}", (int)&ptrToMyInt);
             }
         }
-        struct Point2
-        {
-            public int x;
-            public int y;
-            public override string ToString()
-            {
-                return string.Format("({0}, {1})", x, y);
-            }
-        }
-        unsafe static void UsePointerToPoint()
-        {
-            Console.WriteLine("\nField access via pointers");
-            // Access members via pointer.
-            Point2 point;
-            Point2* p = &point;
-            p->x = 100;
-            p->y = 200;
-            Console.WriteLine(p->ToString());
-            // Access members via pointer indirection.
-            Point2 point2;
-            Point2* p2 = &point2;
-            (*p2).x = 100;
-            (*p2).y = 200;
-            Console.WriteLine((*p2).ToString());
-        }
-        // This entire structure is "unsafe" and can
-        // be used only in an unsafe context.
-        unsafe struct Node
-        {
-            public int Value;
-            public Node* Left;
-            public Node* Right;
-        }
-        // This struct is safe, but the Node2* members
-        // are not. Technically, you may access "Value" from
-        // outside an unsafe context, but not "Left" and "Right".
-        public struct Node2
-        {
-            public int Value;
-            // These can be accessed only in an unsafe context!
-            public unsafe Node2* Left;
-            public unsafe Node2* Right;
-        }
-        unsafe static void SquareIntPointer(int* myIntPointer)
-        {
-            // Square the value just for a test.
-            *myIntPointer *= *myIntPointer;
-        }
-        unsafe public static void UnsafeSwap(int* i, int* j)
-        {
-            int temp = *i;
-            *i = *j;
-            *j = temp;
-        }
-        public static void SafeSwap(ref int i, ref int j)
-        {
-            int temp = i;
-            i = j;
-            j = temp;
-        }
-
         #endregion
     }
 }
