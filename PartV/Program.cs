@@ -14,18 +14,30 @@ namespace PartV
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\ne\n");
-        one:
-            switch (Console.Read())
+            string[] CmdTabs =
             {
-                case 'e': Environment.Exit(0);
+                "custom",
+                "exit"
+            };
+            CmdTabs.AsParallel().ForAll(x => Console.WriteLine(x));
+        one:
+            switch (Console.ReadLine().ToLower())
+            {
+                case "c":
+                case "custom": CustomSpaces();
+                    break;
+                case "e" : 
+                case "exit": Environment.Exit(0);
                     break;
                 default:
                     goto one;
             }
-            The3DSquare square = new The3DSquare();
             Console.WriteLine("\nEnd\nBut you can still Continue!");
             goto one;
+        }
+        static void CustomSpaces()
+        {
+            Console.WriteLine("yes");
         }
     }
 }
