@@ -8,6 +8,7 @@ using Squid_Math.ShapesLib;
 using PartV.EhLibs.CarLibrary;
 
 using The3DSquare = Squid_Math.ShapesLib.Square;
+using Square = Squid_Math.Square;
 
 namespace PartV
 {
@@ -49,5 +50,13 @@ namespace PartV
             Console.WriteLine("Done. Press any key to terminate");
             Console.ReadLine();
         }
+        static void assemTest()
+        {
+            Console.WriteLine("***** Shared Assembly Client *****");
+            Square c = new Square(5); //page 541
+            c.Draw();
+            Console.ReadLine();
+        }
+    }
     }
 }
