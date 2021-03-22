@@ -58,5 +58,4 @@ namespace PartV
             Console.ReadLine();
         }
     }
-    }
 }
