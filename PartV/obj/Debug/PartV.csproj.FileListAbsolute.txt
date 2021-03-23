@@ -23,3 +23,4 @@ C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Pa
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartV\bin\Debug\tr\FSharp.Core.resources.dll
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartV\bin\Debug\zh-Hans\FSharp.Core.resources.dll
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartV\bin\Debug\zh-Hant\FSharp.Core.resources.dll
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartV\bin\Debug\Squid-Math.dll.config
