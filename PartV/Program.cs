@@ -13,7 +13,7 @@ using Square = Squid_Math.Square;
 
 namespace PartV
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
@@ -22,7 +22,9 @@ namespace PartV
                 "Car",
                 "Exit",
                 "Reader",
-                "Type"
+                "Type",
+                "External",
+                "Late"
             };
             CmdTabs.AsParallel().ForAll(x => Console.WriteLine(x));
         one:
@@ -39,6 +41,12 @@ namespace PartV
                     break;
                 case "t":
                 case "type": TypeTesting();
+                    break;
+                case "x":
+                case "external": externalTest();
+                    break;
+                case "l":
+                case "late": LateBindingT();
                     break;
                 default:
                     goto one;
@@ -80,7 +88,7 @@ namespace PartV
             Console.ReadLine();
         }
         #endregion
-
+        #region Chapter 15
         static void TypeTesting()
         {
             Console.WriteLine("***** Welcome to MyTypeViewer *****");
@@ -113,13 +121,26 @@ namespace PartV
                 }
             } while (true);
         }
+        #region type testing methods...
         // Display method names of type.
         static void ListMethods(Type t)
         {
             Console.WriteLine("***** Methods *****");
             MethodInfo[] mi = t.GetMethods();
             foreach (MethodInfo m in mi)
-                Console.WriteLine("->{0}", m.Name);
+            {
+                // Get return type.
+                string retVal = m.ReturnType.FullName;
+                string paramInfo = "( ";
+                // Get params.
+                foreach (ParameterInfo pi in m.GetParameters())
+                {
+                    paramInfo += string.Format("{0} {1} ", pi.ParameterType, pi.Name);
+                }
+                paramInfo += " )";
+                // Now display the basic method sig.
+                Console.WriteLine("->{0} {1} {2}", retVal, m.Name, paramInfo);
+            }
             Console.WriteLine();
         }
         // Display field names of type.
@@ -168,6 +189,46 @@ namespace PartV
             •	 System.Math
             •	 System.Console
             •	 PartV.Program
-        */ //P606
+        */
+        #endregion
+
+        static void externalTest()
+        {
+            Console.WriteLine("***** External Assembly Viewer *****");
+            Assembly asm = null;
+            do
+            {
+                Console.WriteLine("\nEnter an assembly to evaluate");
+                Console.Write("or enter Q to quit: ");
+                // Get name of assembly.
+                string asmName = Console.ReadLine();
+                //Quit option
+                if (asmName.ToUpper() == "Q")
+                    break;
+                //Try Load assem
+                try
+                {
+                    asm = Assembly.LoadFrom(asmName);
+                    DisplayTypeInAsm();
+                }
+                catch
+                {
+                    Console.WriteLine("Sorry, can't find assembly.");
+                }
+            } while (true);
+            return;
+            
+            void DisplayTypeInAsm(/*No need to add parameter since its local*/)
+            {
+                Console.WriteLine("\n***** Types in Assembly *****");
+                Console.WriteLine("->{0}", asm.FullName);
+                Type[] types = asm.GetTypes();
+                foreach (Type t in types)
+                    Console.WriteLine("Type: {0}", t);
+                Console.WriteLine("");
+            }
+        }
+
+        #endregion
     }
 }

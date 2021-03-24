@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="EhLibs\CarLibrary.cs" />
     <Compile Include="EhLibs\FSharpLib.cs" />
+    <Compile Include="Part2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
