@@ -48,6 +48,16 @@ namespace Squid_Math
                 Console.WriteLine();
             }
         }
+        public void Draw2(int l)
+        {
+            Length = l;
+            for (int i = 0; i < Length; i++)
+            {
+                for (int j = 0; j < Length; j++)
+                    Console.Write("*");
+                Console.WriteLine();
+            }
+        }
         public override string ToString()
         {
             return string.Format("[Length = {0}]", Length);

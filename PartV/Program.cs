@@ -24,7 +24,8 @@ namespace PartV
                 "Reader",
                 "Type",
                 "External",
-                "Late"
+                "Late",
+                "Attributes"
             };
             CmdTabs.AsParallel().ForAll(x => Console.WriteLine(x));
         one:
@@ -47,6 +48,9 @@ namespace PartV
                     break;
                 case "l":
                 case "late": LateBindingT();
+                    break;
+                case "a":
+                case "attributes": AttrTests();
                     break;
                 default:
                     goto one;

@@ -8,3 +8,4 @@ C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Te
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\TestConsole\obj\Debug\TestConsole.csproj.CopyComplete
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\TestConsole\obj\Debug\TestConsole.exe
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\TestConsole\obj\Debug\TestConsole.pdb
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\TestConsole\bin\Debug\Squid-Math.dll.config

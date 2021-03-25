@@ -14,3 +14,4 @@ C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Un
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\UnitTests\obj\Debug\UnitTests.csproj.CopyComplete
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\UnitTests\obj\Debug\UnitTests.dll
 C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\UnitTests\obj\Debug\UnitTests.pdb
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\UnitTests\bin\Debug\Squid-Math.dll.config
