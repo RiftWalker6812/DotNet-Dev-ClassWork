@@ -25,7 +25,8 @@ namespace PartV
                 "Type",
                 "External",
                 "Late",
-                "Attributes"
+                "Attributes",
+                "ReflectAttri"
             };
             CmdTabs.AsParallel().ForAll(x => Console.WriteLine(x));
         one:
@@ -51,6 +52,9 @@ namespace PartV
                     break;
                 case "a":
                 case "attributes": AttrTests();
+                    break;
+                case "ra":
+                case "ReflectAttri": RefleAttr();
                     break;
                 default:
                     goto one;
