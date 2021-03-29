@@ -14,9 +14,36 @@ using Square = Squid_Math.Square;
 namespace PartV
 {
     partial class Program
-    {
+    {   
         static void Main(string[] args)
         {
+            Action<string> OutputCmd = x => Console.WriteLine(x);
+            string[] RootTabs =
+            {
+                "E) Exit",
+                "1) Chapters 14-15",
+                "2) Chapter 16"
+            };
+        ZRoot:
+            RootTabs.ToList().ForEach(OutputCmd);
+        zero:
+            switch ((int)Console.ReadKey().Key)
+            {
+                case 69:
+                    Environment.Exit(0);
+                    break;
+                case 48:
+                    goto zero;
+                case 49:
+                    goto PartOneAndTwo;
+                case 50:
+                    Part3();
+                    break;
+                default:
+                    goto zero;
+            }
+            goto ZRoot;
+        PartOneAndTwo:
             string[] CmdTabs =
             {
                 "Car",
@@ -28,7 +55,8 @@ namespace PartV
                 "Attributes",
                 "ReflectAttri"
             };
-            CmdTabs.AsParallel().ForAll(x => Console.WriteLine(x));
+            Console.WriteLine("\n");
+            CmdTabs.AsParallel().ForAll(OutputCmd);
         one:
             switch (Console.ReadLine().ToLower())
             {
@@ -58,6 +86,8 @@ namespace PartV
                     break;
                 default:
                     goto one;
+                case "return":
+                    goto zero;
             }
             Console.WriteLine("\nEnd\nBut you can still Continue!");
             goto one;
