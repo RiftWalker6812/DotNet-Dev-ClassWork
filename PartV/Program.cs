@@ -38,7 +38,7 @@ namespace PartV
                     goto PartOneAndTwo;
                 case 50:
                     Part3();
-                    break;
+                    goto ZRoot;
                 default:
                     goto zero;
             }
