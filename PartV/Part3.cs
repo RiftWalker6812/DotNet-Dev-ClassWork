@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,6 +76,15 @@ namespace PartV
                 VeryDynamicClass very = new VeryDynamicClass();
                 v1 = very.DynamicMethod(v1);
                 Console.WriteLine("{0}\n{1}", v1, very.DynamicMethod(v1));
+            }
+            void D3()
+            {
+                Assembly asm;
+                try
+                {
+                    
+                    Type Square = asm.GetType("Squid_Math.Square");
+                }
             }
         }
         class VeryDynamicClass
