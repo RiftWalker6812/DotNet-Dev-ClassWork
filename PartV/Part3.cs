@@ -36,6 +36,7 @@ namespace PartV
         {
             D1();
             D2();
+            D3();
 
             return;
             
@@ -79,11 +80,18 @@ namespace PartV
             }
             void D3()
             {
+                Console.WriteLine("\n");
                 Assembly asm;
                 try
                 {
-                    
+                    asm = Assembly.Load("Squid-Math");
                     Type Square = asm.GetType("Squid_Math.Square");
+                    dynamic obj = Activator.CreateInstance(Square);
+                    obj.Draw2(5);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
