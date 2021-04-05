@@ -22,7 +22,7 @@ namespace PartV
             {
                 "E) Exit",
                 "1) Chapters 14-15",
-                "2) Chapter 16"
+                "2) Chapter 16-17"
             };
         ZRoot:
             RootTabs.ToList().ForEach(OutputCmd);

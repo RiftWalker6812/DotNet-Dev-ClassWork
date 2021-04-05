@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,8 @@ namespace PartV
             {
                 "E) Exit",
                 "0) Code 0",
-                "1) dynamics"
+                "1) dynamics",
+                "2) Processes"
             };
             Console.WriteLine("\n");
             Part3Lst.ToList().ForEach(x => Console.WriteLine(x));
@@ -29,9 +31,38 @@ namespace PartV
                     break;
                 case '1': DynamicDataTest();
                     goto A1;
+                case '2': ProcessesTesting();
+                    goto A1;
             }
         }
 
+        private static void ProcessesTesting()
+        {
+            Console.WriteLine("\n");
+            P1();
+
+            return;
+
+            void P1()
+            {
+                Action<Process> action = x =>
+                {
+                    string info = string.Format("-> PID: {0}\tName: {1}",
+                        x.Id, x.ProcessName);
+                    Console.WriteLine(info);
+                };
+                IOrderedEnumerable<Process> runningProcs = 
+                    from proc in Process.GetProcesses(".")
+                    orderby proc.Id
+                    select proc;
+                runningProcs.ToList().ForEach(action);
+                GC.Collect();
+                Console.WriteLine("****************************************\n");
+            }
+            
+        }
+
+        #region (Chapter 16) Dynamic Data Testing...
         private static void DynamicDataTest()
         {
             D1();
@@ -117,5 +148,6 @@ namespace PartV
                 }
             }
         }
+        #endregion
     }
 }
