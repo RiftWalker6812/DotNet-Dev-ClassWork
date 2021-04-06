@@ -40,9 +40,10 @@ namespace PartV
         {
             Console.WriteLine("\n");
             P1();
-
+            System.Threading.Thread.Sleep(800);
             return;
 
+            //continue page 685
             void P1()
             {
                 Action<Process> action = x =>
@@ -58,8 +59,61 @@ namespace PartV
                 runningProcs.ToList().ForEach(action);
                 GC.Collect();
                 Console.WriteLine("****************************************\n");
-            }
-            
+            //NEXT
+            tryagain:
+                Console.WriteLine("\nInvestigate Y/N\n");
+                ConsoleKey key = Console.ReadKey().Key;
+                if (key is ConsoleKey.N)
+                    return;
+                else if (!key.Equals(ConsoleKey.Y))
+                    goto tryagain;
+                EnumsThreadForPid();
+
+                return;
+                void EnumsThreadForPid()
+                {
+                    Console.WriteLine("\nEnter Id");
+                    Process theProc = null;
+                    try
+                    {
+                        theProc = Process.GetProcessById(int.Parse(Console.ReadLine()));
+                        Console.WriteLine("Here are the threads used by: {0}", theProc.ProcessName);
+                        ProcessThreadCollection theThreads = theProc.Threads;
+                        foreach (ProcessThread pt in theThreads)
+                        {
+                            string info = string.Format("-> Thread ID: {0}\tStart Time: {1}\tPriority: {2}",
+                                pt.Id, pt.StartTime.ToShortTimeString(), pt.PriorityLevel);
+                            Console.WriteLine(info);
+                            Console.WriteLine("****************************************\n");
+                        }
+                        Console.WriteLine("Here are the loaded modules for: {0}", theProc.ProcessName);
+                        ProcessModuleCollection theMods = theProc.Modules;
+                        foreach (ProcessModule pm in theMods)
+                        {
+                            string info = string.Format("-> Mod Name: {0}", pm.ModuleName);
+                            Console.WriteLine(info);
+                        }
+                        Console.WriteLine("************************************\n");
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    catch (Exception b)
+                    {
+                        Console.WriteLine(b.StackTrace);
+                        Console.WriteLine(b.Message);
+                    }
+                    tryagain2:
+                    Console.WriteLine("Try Again Y/N");
+                    ConsoleKey key2 = Console.ReadKey().Key;
+                    if (key2 is ConsoleKey.N)
+                        return;
+                    else if (!key2.Equals(ConsoleKey.Y))
+                        goto tryagain2;
+                    EnumsThreadForPid();
+                }
+            } 
         }
 
         #region (Chapter 16) Dynamic Data Testing...
