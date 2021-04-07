@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PartV
 {
     partial class Program
     {
-        static void Part3()
+        private static void Part3()
         {
             string[] Part3Lst =
             {
@@ -21,25 +20,37 @@ namespace PartV
             };
             Console.WriteLine("\n");
             Part3Lst.ToList().ForEach(x => Console.WriteLine(x));
-            A1:
+        A1:
             switch (Console.ReadKey().KeyChar)
             {
-                case 'E': 
-                case 'e': 
+                case 'E':
+                case 'e':
                     break;
-                case '0': Environment.Exit(0);
+
+                case '0':
+                    Environment.Exit(0);
                     break;
-                case '1': DynamicDataTest();
+
+                case '1':
+                    DynamicDataTest();
                     goto A1;
-                case '2': ProcessesTesting();
+                case '2':
+                    ProcessesTesting();
                     goto A1;
             }
         }
 
+        #region (Chapter 17) Proccess Testing...
         private static void ProcessesTesting()
         {
             Console.WriteLine("\n");
-            P1();
+            //P1();
+            //System.Threading.Thread.Sleep(800);
+            ////P2();
+            //System.Threading.Thread.Sleep(800);
+            //P3();
+            //System.Threading.Thread.Sleep(800);
+            P4();
             System.Threading.Thread.Sleep(800);
             return;
 
@@ -52,7 +63,7 @@ namespace PartV
                         x.Id, x.ProcessName);
                     Console.WriteLine(info);
                 };
-                IOrderedEnumerable<Process> runningProcs = 
+                IOrderedEnumerable<Process> runningProcs =
                     from proc in Process.GetProcesses(".")
                     orderby proc.Id
                     select proc;
@@ -104,7 +115,7 @@ namespace PartV
                         Console.WriteLine(b.StackTrace);
                         Console.WriteLine(b.Message);
                     }
-                    tryagain2:
+                tryagain2:
                     Console.WriteLine("Try Again Y/N");
                     ConsoleKey key2 = Console.ReadKey().Key;
                     if (key2 is ConsoleKey.N)
@@ -113,10 +124,123 @@ namespace PartV
                         goto tryagain2;
                     EnumsThreadForPid();
                 }
-            } 
+            }
+            void P2()
+            {
+                Process ieProc = null;
+                // Launch firefox, and go to youtube!
+                try
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo("firefox.exe", "www.youtube.com");
+                    startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                    ieProc = Process.Start(startInfo);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Console.Write("--> Hit enter to kill {0}...", ieProc.ProcessName);
+                Console.ReadLine();
+                try
+                {
+                    ieProc.Kill();
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            void P3()
+            {
+                Console.WriteLine("***** Fun with the default AppDomain *****\n");
+                DisplayDADStats();
+                ListAllAssembliesInAppDomain();
+                Console.ReadLine();
+                return;
+                void DisplayDADStats()
+                {
+                    // Get access to the AppDomain for the current thread.
+                    AppDomain defaultAD = AppDomain.CurrentDomain;
+                    // Print out various stats about this domain.
+                    Console.WriteLine("Name of this domain: {0}", defaultAD.FriendlyName);
+                    Console.WriteLine("ID of domain in this process: {0}", defaultAD.Id);
+                    Console.WriteLine("Is this the default domain?: {0}",
+                    defaultAD.IsDefaultAppDomain());
+                    Console.WriteLine("Base directory of this domain: {0}", defaultAD.BaseDirectory);
+                }
+                void ListAllAssembliesInAppDomain()
+                {
+                    // Get access to the AppDomain for the current thread.
+                    AppDomain defaultAD = AppDomain.CurrentDomain;
+                    InitDAD(ref defaultAD);
+                    // Now get all loaded assemblies in the default AppDomain.
+                    Assembly[] loadedAssemblies = defaultAD.GetAssemblies();
+                    Console.WriteLine("***** Here are the assemblies loaded in {0} *****\n",
+                    defaultAD.FriendlyName);
+                    foreach (Assembly a in loadedAssemblies)
+                    {
+                        Console.WriteLine("-> Name: {0}", a.GetName().Name);
+                        Console.WriteLine("-> Version: {0}\n", a.GetName().Version);
+                    }
+                }
+                void InitDAD(ref AppDomain defaultAD)
+                {
+                    // This logic will print out the name of any assembly
+                    // loaded into the applicaion domain, after it has been
+                    // created.
+                    defaultAD = AppDomain.CurrentDomain;
+                    defaultAD.AssemblyLoad += (o, s) =>
+                    {
+                        Console.WriteLine("{0} has been loaded!", s.LoadedAssembly.GetName().Name);
+                    };
+                }
+            }
+            void P4()
+            {
+                Console.WriteLine("***** Fun with Custom AppDomains *****\n");
+                // Show all loaded assemblies in default AppDomain.
+                AppDomain defaultAD = AppDomain.CurrentDomain;
+                ListAllAssembliesInAppDomain(defaultAD);
+                // Make a new AppDomain.
+                MakeNewAppDomain();
+                Console.ReadLine();
+                void MakeNewAppDomain()
+                {
+                    // Make a new AppDomain in the current process and
+                    // list loaded assemblies.
+                    AppDomain newAD = AppDomain.CreateDomain("SecondAppDomain");
+                    try
+                    {
+                        // Now load CarLibrary.dll into this new domain.
+                        newAD.Load("Squid-Math");
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    ListAllAssembliesInAppDomain(newAD);
+                    AppDomain.Unload(newAD);
+                }
+                void ListAllAssembliesInAppDomain(in AppDomain ad)
+                {
+                    // Now get all loaded assemblies in the default AppDomain.
+                    var loadedAssemblies = from a in ad.GetAssemblies()
+                                           orderby a.GetName().Name
+                                           select a;
+                    Console.WriteLine("***** Here are the assemblies loaded in {0} *****\n", ad.FriendlyName);
+                    foreach (var a in loadedAssemblies)
+                    {
+                        Console.WriteLine("-> Name: {0}", a.GetName().Name);
+                        Console.WriteLine("-> Version: {0}\n", a.GetName().Version);
+                    }
+                }
+            }
         }
 
+        #endregion
+
         #region (Chapter 16) Dynamic Data Testing...
+
         private static void DynamicDataTest()
         {
             D1();
@@ -124,7 +248,7 @@ namespace PartV
             D3();
 
             return;
-            
+
             void D1()
             {
                 Console.WriteLine("\n");
@@ -180,12 +304,15 @@ namespace PartV
                 }
             }
         }
-        class VeryDynamicClass
+
+        private class VeryDynamicClass
         {
             // A dynamic field.
             private static dynamic myDynamicField;
+
             // A dynamic property.
             public dynamic DynamicProperty { get; set; }
+
             // A dynamic return type and a dynamic parameter type.
             public dynamic DynamicMethod(dynamic dynamicParam)
             {
@@ -202,6 +329,7 @@ namespace PartV
                 }
             }
         }
-        #endregion
+
+        #endregion (Chapter 16) Dynamic Data Testing...
     }
 }
