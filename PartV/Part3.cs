@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
+using System.Threading;
 
 namespace PartV
 {
@@ -52,6 +54,8 @@ namespace PartV
             //System.Threading.Thread.Sleep(800);
             P4();
             System.Threading.Thread.Sleep(800);
+            P5();
+            System.Threading.Thread.Sleep(400);
             return;
 
             //continue page 685
@@ -201,9 +205,11 @@ namespace PartV
                 // Show all loaded assemblies in default AppDomain.
                 AppDomain defaultAD = AppDomain.CurrentDomain;
                 ListAllAssembliesInAppDomain(defaultAD);
+                KillProcess(ref defaultAD);
                 // Make a new AppDomain.
                 MakeNewAppDomain();
                 Console.ReadLine();
+                return;
                 void MakeNewAppDomain()
                 {
                     // Make a new AppDomain in the current process and
@@ -234,9 +240,54 @@ namespace PartV
                         Console.WriteLine("-> Version: {0}\n", a.GetName().Version);
                     }
                 }
+                void KillProcess(ref AppDomain AD)
+                {
+                    AD.ProcessExit += (o, s) =>
+                    {
+                        Console.WriteLine("Default AD unloaded!");
+                    };
+                    ListAllAssembliesInAppDomain(AD);
+                    Console.ReadLine();
+                }
+            }
+            void P5()
+            {
+                Console.WriteLine("***** Fun with Object Context *****\n");
+                // Objects will display contextual info upon creation.
+                SportsCar2 sport = new SportsCar2();
+                Console.WriteLine();
+                SportsCar2 sport2 = new SportsCar2();
+                Console.WriteLine();
+                SportsCarTS synchroSport = new SportsCarTS();
+                Console.ReadLine();
+
             }
         }
-
+        [Synchronization]
+        class SportsCarTS : ContextBoundObject
+        {
+            public SportsCarTS()
+            {
+                // Get context information and print out context ID.
+                Context ctx = Thread.CurrentContext;
+                Console.WriteLine("{0} object in context {1}",
+                this.ToString(), ctx.ContextID);
+                foreach (IContextProperty itfCtxProp in ctx.ContextProperties)
+                    Console.WriteLine("-> Ctx Prop: {0}", itfCtxProp.Name);
+            }
+        }
+        class SportsCar2
+        {
+            public SportsCar2()
+            {
+                // Get context information and print out context ID.
+                Context ctx = Thread.CurrentContext;
+                Console.WriteLine("{0} object in context {1}",
+                this.ToString(), ctx.ContextID);
+                foreach (IContextProperty itfCtxProp in ctx.ContextProperties)
+                    Console.WriteLine("-> Ctx Prop: {0}", itfCtxProp.Name);
+            }
+        }
         #endregion
 
         #region (Chapter 16) Dynamic Data Testing...
