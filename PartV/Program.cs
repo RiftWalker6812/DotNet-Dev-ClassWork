@@ -22,7 +22,8 @@ namespace PartV
             {
                 "E) Exit",
                 "1) Chapters 14-15",
-                "2) Chapter 16-17"
+                "2) Chapter 16-17",
+                "3) Chapter 10 EVENTS"
             };
         ZRoot:
             RootTabs.ToList().ForEach(OutputCmd);
@@ -39,6 +40,9 @@ namespace PartV
                 case 50:
                     Part3();
                     goto ZRoot;
+                case 51:
+                    new Chapter10.EvMain();
+                    goto zero;
                 default:
                     goto zero;
             }
