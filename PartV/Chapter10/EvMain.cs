@@ -8,28 +8,28 @@ namespace PartV.Chapter10
 {
     public class EvMain
     {
-        public EvMain()
+        public EvMain()//Instantiate
         {
-            EMain(); //Instantiate
+            DMain(); 
         }
-        public static void EMain()
+        private static void DMain()
         {
             SimpleDelageExample();
-
+            DelegateEventEnablers();
+            GenericDelegates();
             return;
         }
-
+        #region M1
         private static void SimpleDelageExample()
         {
             Console.WriteLine("***** Simple Delegate Example *****\n");
             SimpleMath m = new SimpleMath();
             BinaryOp b = new BinaryOp(m.Add);
             DisplayDelegateInfo(b);
-            Console.WriteLine(b);
+            Console.WriteLine("10 + 10 is {0}", b(10, 10));
             Console.ReadLine();
-
         }
-        static void DisplayDelegateInfo(Delegate delObj)
+        private static void DisplayDelegateInfo(Delegate delObj)
         {
             // Print the names of each member in the
             // delegate's invocation list.
@@ -49,5 +49,111 @@ namespace PartV.Chapter10
             public static int Subtract(int x, int y)
             { return x - y; }
         }
+        #endregion
+        #region M2
+        private static void DelegateEventEnablers()
+        {
+            Console.WriteLine("***** Delegates as event enablers *****\n");
+            Car c1 = new Car("SlugBug", 100, 10);
+            c1.RegisterWithCarEngine(new Car.CarEngineHandler(OnCarEngineEvent));
+
+            Car.CarEngineHandler handler2 = new Car.CarEngineHandler(OnCarEngineEvent2);
+            c1.RegisterWithCarEngine(handler2);
+
+            Console.WriteLine("***** Speeding up *****");
+            for (int i = 0; i < 6; i++)
+                c1.Accelerate(20);
+
+            c1.UnRegisterWithCarEngine(handler2);
+
+            Console.WriteLine("***** Speeding up *****");
+            for (int i = 0; i < 6; i++)
+                c1.Accelerate(20);
+
+            Console.ReadLine();
+        }
+
+        private static void OnCarEngineEvent2(string msg)
+        {
+            Console.WriteLine("=> {0}", msg.ToUpper());
+        }
+
+        private static void OnCarEngineEvent(string msg)
+        {
+            Console.WriteLine("\n***** Message From Car Object *****");
+            Console.WriteLine("=> {0}", msg);
+            Console.WriteLine("***********************************\n");
+        }
+
+        
+        public class Car
+        {
+            //Internal state data.
+            public int CurrentSpeed, MaxSpeed = 100;
+            public string PetName;
+
+            private bool carIsDead;
+
+            public Car() { }
+            public Car(string name, int maxSp, int currSp) => 
+                (PetName, MaxSpeed, CurrentSpeed) = (name, maxSp, currSp);
+
+            // 1) Define a delegate type.
+            public delegate void CarEngineHandler(string msgForCaller);
+            // 2) Define a member variable of this delegate.
+            private CarEngineHandler listOfhandlers;
+            // 3) Add registration function for the caller.
+            // Now with multicasting support!
+            public void RegisterWithCarEngine(CarEngineHandler methodToCall) =>
+                listOfhandlers += methodToCall;
+            // 3.5) Remove method from the delegate
+            public void UnRegisterWithCarEngine(CarEngineHandler methodToCall) =>
+                listOfhandlers -= methodToCall;
+            // 4) Implement the Accelerate() method to invoke the delegate's
+            // invocation list under the correct circumstances.
+            public void Accelerate(int delta)
+            {
+                if (carIsDead && (listOfhandlers != null))
+                    listOfhandlers("Sorry, this car is dead...");
+                else
+                {
+                    CurrentSpeed += delta;
+
+                    //Is this car "almost dead"?
+                    if (10 >= (MaxSpeed - CurrentSpeed) && listOfhandlers != null)
+                        listOfhandlers("Careful buddy! Gonna blow!");
+                    if (CurrentSpeed >= MaxSpeed)
+                        carIsDead = true;
+                    else
+                        Console.WriteLine("CurrentSpeed = {0}", CurrentSpeed);
+                }
+            }
+        }
+        #endregion
+        #region M3
+
+        private delegate void MyGenericDelegate<T>(T args);
+        private static void GenericDelegates()
+        {
+            Console.WriteLine("***** Generic Delegates *****\n");
+
+            MyGenericDelegate<string> strTarget = new MyGenericDelegate<string>(StringTarget);
+            strTarget("Some string data");
+
+            MyGenericDelegate<int> intTarget = new MyGenericDelegate<int>(IntTarget);
+            intTarget(9);
+            Console.ReadLine();
+        }
+        private static void StringTarget(string arg)
+        {
+            Console.WriteLine("arg in uppercase is: {0}", arg.ToUpper());
+        }
+        private static void IntTarget(int arg)
+        {
+            Console.WriteLine("++arg is: {0}", ++arg);
+        } //page 430
+
+
+        #endregion
     }
 }
