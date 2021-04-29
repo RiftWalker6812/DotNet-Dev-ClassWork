@@ -201,9 +201,71 @@ namespace PartV.Chapter10
         //Events
         private class ESpace
         {
+            //Properties
+
+            //Methods
             public static void EMain()
             {
-                //Page 435
+                Console.WriteLine("***** Fun with Events *****\n");
+                Car c1 = new Car("SlugBug", 100, 10);
+
+                //Register event handlers
+                c1.AboutToBlow += CarIsAlmostDoomed;
+                c1.AboutToBlow += CarAboutToBlow;
+
+                c1.Exploded += CarExploded;
+
+                Console.WriteLine("***** Speeding up *****");
+                for (int i = 0; i < 6; i++)
+                    c1.Accelerate(20);
+
+                c1.Exploded -= CarExploded;
+
+                Console.WriteLine("\n***** Speeding up *****");
+                for (int i = 0; i < 6; i++)
+                    c1.Accelerate(20);
+
+                Console.ReadLine();
+            }
+            private static void CarIsAlmostDoomed(string msg) => Console.WriteLine(msg);
+            private static void CarAboutToBlow(string msg) => Console.WriteLine("=> Critical Message from Car: {0}", msg);
+            private static void CarExploded(string msg) => Console.WriteLine(msg);
+            //Classes
+            private class Car
+            {
+                //Init
+                public Car(string s, int m, int c) => (CarName, MaxSpeed, CurrentSpeed) = (s, m, c);
+                //Create Delegate Type
+                //public delegate void CarEngineHandler(string msg);
+                public delegate void CarEngineHandler(object sender, CarEventArgs e);
+                //Declare Events
+                public event CarEngineHandler Exploded;
+                public event CarEngineHandler AboutToBlow;
+                //Properties
+                private string CarName;
+                private bool IsCarDead;
+                private int CurrentSpeed;
+                private int MaxSpeed;
+                //Methods
+                public void Accelerate(int delta)
+                {
+                    if (IsCarDead)
+                        Exploded?.Invoke("Sorry, this car is dead...");
+                    else
+                    {
+                        CurrentSpeed += delta;
+
+                        if (10 == MaxSpeed - CurrentSpeed)
+                            AboutToBlow?.Invoke("Careful buddy! Gonna blow!");
+                        if (!(IsCarDead = CurrentSpeed >= MaxSpeed))
+                            Console.WriteLine("CurrentSpeed = {0}", CurrentSpeed);
+                    }
+                }
+            }
+            private class CarEventArgs : EventArgs
+            {
+                public readonly string msg;
+                public CarEventArgs(string message) => msg = message;
             }
         }
     }
