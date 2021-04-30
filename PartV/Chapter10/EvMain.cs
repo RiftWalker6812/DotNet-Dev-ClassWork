@@ -14,6 +14,8 @@ namespace PartV.Chapter10
             DSpace.DMain();
             //Events
             ESpace.EMain();
+            //Anonymous
+            ASpace.AMain();
         }
         //Delegates
         private class DSpace
@@ -206,7 +208,7 @@ namespace PartV.Chapter10
             //Methods
             public static void EMain()
             {
-                Console.WriteLine("***** Fun with Events *****\n");
+                Console.WriteLine("***** Prim and Proper Events *****\n");
                 Car c1 = new Car("SlugBug", 100, 10);
 
                 //Register event handlers
@@ -227,20 +229,21 @@ namespace PartV.Chapter10
 
                 Console.ReadLine();
             }
-            private static void CarIsAlmostDoomed(string msg) => Console.WriteLine(msg);
-            private static void CarAboutToBlow(string msg) => Console.WriteLine("=> Critical Message from Car: {0}", msg);
-            private static void CarExploded(string msg) => Console.WriteLine(msg);
+            private static void CarIsAlmostDoomed(object sender, CarEventArgs e) => Console.WriteLine(e.msg);
+            private static void CarAboutToBlow(object sender, CarEventArgs e) => 
+                Console.WriteLine("{0} says: {1}", sender, e.msg);
+            private static void CarExploded(object sender, CarEventArgs e) => Console.WriteLine(e.msg);
             //Classes
-            private class Car
+            public class Car
             {
                 //Init
                 public Car(string s, int m, int c) => (CarName, MaxSpeed, CurrentSpeed) = (s, m, c);
                 //Create Delegate Type
                 //public delegate void CarEngineHandler(string msg);
-                public delegate void CarEngineHandler(object sender, CarEventArgs e);
+                //public delegate void CarEngineHandler(object sender, CarEventArgs e);
                 //Declare Events
-                public event CarEngineHandler Exploded;
-                public event CarEngineHandler AboutToBlow;
+                public event EventHandler<CarEventArgs> Exploded;
+                public event EventHandler<CarEventArgs> AboutToBlow;
                 //Properties
                 private string CarName;
                 private bool IsCarDead;
@@ -250,22 +253,99 @@ namespace PartV.Chapter10
                 public void Accelerate(int delta)
                 {
                     if (IsCarDead)
-                        Exploded?.Invoke("Sorry, this car is dead...");
+                        Exploded?.Invoke(this, new CarEventArgs("Sorry, this car is dead..."));
                     else
                     {
                         CurrentSpeed += delta;
 
                         if (10 == MaxSpeed - CurrentSpeed)
-                            AboutToBlow?.Invoke("Careful buddy! Gonna blow!");
+                            AboutToBlow?.Invoke(this, new CarEventArgs("Careful buddy! Gonna blow!"));
                         if (!(IsCarDead = CurrentSpeed >= MaxSpeed))
                             Console.WriteLine("CurrentSpeed = {0}", CurrentSpeed);
                     }
                 }
             }
-            private class CarEventArgs : EventArgs
+            public class CarEventArgs : EventArgs
             {
                 public readonly string msg;
                 public CarEventArgs(string message) => msg = message;
+            }
+        }
+        //Anonymous
+        private class ASpace
+        {
+            public static void AMain()
+            {
+                Console.WriteLine("***** Anonymous Methods *****\n");
+                int aboutToBlowCounter = 0;
+
+                ESpace.Car c1 = new ESpace.Car("SlugBug", 100, 10);
+
+                c1.AboutToBlow += delegate
+                {
+                    aboutToBlowCounter++;
+                    Console.WriteLine("Eek! Going too fast!");
+                };
+
+                c1.AboutToBlow += delegate(object sender, ESpace.CarEventArgs e) 
+                { Console.WriteLine("Critical Message from Car: {0}", e.msg); };
+
+                for (int i = 0; i < 6; i++)
+                    c1.Accelerate(20);
+
+                Console.Write("AboutToBlow event was fired {0} times.", aboutToBlowCounter);
+                Console.ReadLine();
+
+                Console.WriteLine("***** Fun with Lambdas *****\n");
+                TraditionalDelegateSyntax();
+                Console.ReadLine();
+
+                Console.WriteLine("***** More Fun with Lambdas *****\n");
+                // Make a car as usual.
+                var c2 = new ESpace.Car("SlugBug", 100, 10);
+                // Hook into events with lambdas!
+                c2.AboutToBlow += (sender, e) => { Console.WriteLine(e.msg); };
+                c2.Exploded += (sender, e) => { Console.WriteLine(e.msg); };
+                // Speed up (this will generate the events).
+                Console.WriteLine("\n***** Speeding up *****");
+                for (int i = 0; i < 6; i++)
+                    c2.Accelerate(20);
+                Console.ReadLine();
+            }
+            private static void TraditionalDelegateSyntax()
+            {
+                // Make a list of integers.
+                List<int> list = new List<int>();
+                list.AddRange(new int[] { 20, 1, 4, 8, 9, 44 });
+                // Call FindAll() using traditional delegate syntax.
+                Predicate<int> callback = IsEvenNumber;
+                List<int> evenNumbers = list.FindAll(callback);
+                Console.WriteLine("Here are your even numbers:");
+                foreach (int evenNumber in evenNumbers)
+                {
+                    Console.Write("{0}\t", evenNumber);
+                }
+                Console.WriteLine();
+            }
+            // Target for the Predicate<> delegate.
+            private static bool IsEvenNumber(int i)
+            {
+                // Is it an even number?
+                return (i % 2) == 0;
+            }
+            private static void LambdaExpressionSyntax()
+            {
+                // Make a list of integers.
+                List<int> list = new List<int>();
+                list.AddRange(new int[] { 20, 1, 4, 8, 9, 44 });
+                // Now, use a C# lambda expression.
+                List<int> evenNumbers = list.FindAll(i => (i % 2) == 0);
+                Console.WriteLine("Here are your even numbers:");
+                foreach (int evenNumber in evenNumbers)
+                {
+                    Console.Write("{0}\t", evenNumber);
+                }
+                Console.WriteLine();
             }
         }
     }
