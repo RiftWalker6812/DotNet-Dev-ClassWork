@@ -201,7 +201,7 @@ namespace PartV.Chapter10
             
         }
         //Events
-        private class ESpace
+        public class ESpace
         {
             //Properties
 
