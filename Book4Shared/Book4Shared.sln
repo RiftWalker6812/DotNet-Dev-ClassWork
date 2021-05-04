@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "..\TestConso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartV", "..\PartV\PartV.csproj", "{6AA776AA-ADA9-467A-AB20-D35C89CCEC64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartVI", "..\PartVI\PartVI.csproj", "{700F840D-FC57-4BC4-9371-82568F2764BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartVI", "..\PartVI\PartVI.csproj", "{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -46,10 +46,10 @@ Global
 		{6AA776AA-ADA9-467A-AB20-D35C89CCEC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AA776AA-ADA9-467A-AB20-D35C89CCEC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AA776AA-ADA9-467A-AB20-D35C89CCEC64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{700F840D-FC57-4BC4-9371-82568F2764BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{700F840D-FC57-4BC4-9371-82568F2764BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{700F840D-FC57-4BC4-9371-82568F2764BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{700F840D-FC57-4BC4-9371-82568F2764BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
