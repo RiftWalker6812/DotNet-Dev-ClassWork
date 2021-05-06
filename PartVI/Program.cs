@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace PartVI
 {
@@ -11,7 +12,9 @@ namespace PartVI
 
             //O1(); //Operation 1
             //O2(); //Operation 2
-            O3(); //Operation 3
+            //O3(); //Operation 3
+            //O4(); //Operation 4
+            O5(); //Operation 5
         }
 
         delegate int BinaryOp(int x, int y);
@@ -78,6 +81,51 @@ namespace PartVI
             Console.WriteLine("Thread State: {0}",
             primaryThread.ThreadState);
             Console.ReadLine(); //Page 763
+        }
+        static void O4()
+        {
+            Console.WriteLine("***** The Amazing Thread App *****\n");
+            Console.Write("Do you want [1] or [2] threads? ");
+            string threadCount = Console.ReadLine();
+
+            Thread primaryThread = Thread.CurrentThread;
+            primaryThread.Name = "Primary";
+
+            Console.WriteLine("-> {0} is executing main()", Thread.CurrentThread.Name);
+
+            Printer p = new Printer();
+
+            switch (threadCount)
+            {
+                case "2":
+                    Thread backgroundThread = new Thread(new ThreadStart(p.PrintNumbers))
+                    {
+                        Name = "Secondary"
+                    };
+                    backgroundThread.Start();
+                    break;
+                case "1":
+                    p.PrintNumbers();
+                    break;
+                default:
+                    Console.WriteLine("I don't know what you want... you get 1 thread.");
+                    goto case "1";
+            }
+            MessageBox.Show("I'm busy!", "Work on main thread...");
+            Console.ReadLine();
+        }
+        static void O5()
+        {
+            Console.WriteLine("***** Adding with Thread objects *****");
+            Console.WriteLine("ID of thread in Main(): {0}",
+            Thread.CurrentThread.ManagedThreadId);
+
+            var ap = new AddParams(10, 10);
+            Thread t = new Thread(new ParameterizedThreadStart(Add));
+            t.Start(ap);
+            Thread.Sleep(5);
+
+            Console.ReadLine();
         }
     }
 }

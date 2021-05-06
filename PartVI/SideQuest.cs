@@ -30,5 +30,38 @@ namespace PartVI
             Console.WriteLine(msg);
             isDone = true;
         }
+
+        static void Add(object data)
+        {
+            if (data is AddParams c)
+            {
+                Console.WriteLine("ID of thread in Add(): {0}",
+                Thread.CurrentThread.ManagedThreadId);
+                AddParams ap = c;
+                Console.WriteLine("{0} + {1} is {2}",
+                ap.a, ap.b, ap.a + ap.b);
+            }
+        }
+        static AutoResetEvent waitHandle = new AutoResetEvent(false);
+        class Printer
+        {
+            public void PrintNumbers()
+            {
+                Console.WriteLine(("-> {0} is executing PrintNumbers()", Thread.CurrentThread.Name));
+
+                Console.Write("Your numbers: ");
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.Write("{0}, ", i);
+                    Thread.Sleep(2000);
+                }
+                Console.WriteLine();
+            }
+        }
+        class AddParams
+        {
+            public int a, b;
+            public AddParams(int numb1, int numb2) => (a, b) = (numb1, numb2);
+        }
     }
 }
