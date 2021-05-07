@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace PartVI
 {
@@ -14,7 +16,10 @@ namespace PartVI
             //O2(); //Operation 2
             //O3(); //Operation 3
             //O4(); //Operation 4
-            O5(); //Operation 5
+            //O5(); //Operation 5
+            //O6(); //Operation 6
+            O7(); //Operation 7
+            //O8(); //Operation 8
         }
 
         delegate int BinaryOp(int x, int y);
@@ -123,9 +128,41 @@ namespace PartVI
             var ap = new AddParams(10, 10);
             Thread t = new Thread(new ParameterizedThreadStart(Add));
             t.Start(ap);
-            Thread.Sleep(5);
+            //waits for thread to finsih using AutoResetEven class
+            waitHandle.WaitOne(); 
+            Console.WriteLine("Other thread is done!");  
 
+            Console.ReadLine(); //Page 765
+        }
+        static void O6()
+        {
+            Console.WriteLine("***** Background Threads *****\n");
+            Printer p = new Printer();
+            Thread bgroundThread = new Thread(new ThreadStart(p.PrintNumbers));
+            {
+                bgroundThread.IsBackground = true;
+                bgroundThread.Start();
+            };
+        }
+        static void O7()
+        {
+            Console.WriteLine("*****Synchronizing Threads *****\n");
+            var p = new Printer();
+
+            Thread[] threads = new Thread[10];
+            for (int i = 0; i < 10; i++)
+            {
+                threads[i] = new Thread(new ThreadStart(p.PrintNumbers));
+                threads[i].Name = string.Format("Worker thread #{0}", i);
+            }
+            foreach (Thread t in threads)
+                t.Start();
             Console.ReadLine();
+            List<Thread> o = 
+        }
+        static void O8()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -40,6 +40,7 @@ namespace PartVI
                 AddParams ap = c;
                 Console.WriteLine("{0} + {1} is {2}",
                 ap.a, ap.b, ap.a + ap.b);
+                waitHandle.Set();
             }
         }
         static AutoResetEvent waitHandle = new AutoResetEvent(false);
@@ -52,8 +53,9 @@ namespace PartVI
                 Console.Write("Your numbers: ");
                 for (int i = 0; i < 10; i++)
                 {
+                    Random r = new Random();
+                    Thread.Sleep(100 * r.Next(5));
                     Console.Write("{0}, ", i);
-                    Thread.Sleep(2000);
                 }
                 Console.WriteLine();
             }
