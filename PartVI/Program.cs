@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Collections;
 
 namespace PartVI
 {
     partial class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
 
@@ -18,12 +16,13 @@ namespace PartVI
             //O4(); //Operation 4
             //O5(); //Operation 5
             //O6(); //Operation 6
-            O7(); //Operation 7
-            //O8(); //Operation 8
+            //O7(); //Operation 7
+            O8(); //Operation 8
         }
 
-        delegate int BinaryOp(int x, int y);
-        static void O1()
+        private delegate int BinaryOp(int x, int y);
+
+        private static void O1()
         {
             Console.WriteLine("***** Async Delegate Invocation *****");
             // Print out the ID of the executing thread.
@@ -44,15 +43,18 @@ namespace PartVI
             return;
 
             #region UNUSED
+
             //static void ExtractExecutingThread()
             //{ Thread currThread = Thread.CurrentThread; }
             //static void ExtractAppDomainHostingThread()
             //{ AppDomain ad = Thread.GetDomain(); }
             //static void ExtractCurrentThreadContext()
             //{ Context ctx = Thread.CurrentContext; }
-            #endregion
+
+            #endregion UNUSED
         }
-        static void O2()
+
+        private static void O2()
         {
             Console.WriteLine("***** AsyncCallbackDelegate Example *****");
             Console.WriteLine("Main() invoked on thread {0}.",
@@ -68,7 +70,8 @@ namespace PartVI
             }
             Console.ReadLine(); //Page 756
         }
-        static void O3()
+
+        private static void O3()
         {
             Console.WriteLine("***** Primary Thread stats *****\n");
 
@@ -87,7 +90,8 @@ namespace PartVI
             primaryThread.ThreadState);
             Console.ReadLine(); //Page 763
         }
-        static void O4()
+
+        private static void O4()
         {
             Console.WriteLine("***** The Amazing Thread App *****\n");
             Console.Write("Do you want [1] or [2] threads? ");
@@ -109,9 +113,11 @@ namespace PartVI
                     };
                     backgroundThread.Start();
                     break;
+
                 case "1":
                     p.PrintNumbers();
                     break;
+
                 default:
                     Console.WriteLine("I don't know what you want... you get 1 thread.");
                     goto case "1";
@@ -119,7 +125,8 @@ namespace PartVI
             MessageBox.Show("I'm busy!", "Work on main thread...");
             Console.ReadLine();
         }
-        static void O5()
+
+        private static void O5()
         {
             Console.WriteLine("***** Adding with Thread objects *****");
             Console.WriteLine("ID of thread in Main(): {0}",
@@ -129,12 +136,13 @@ namespace PartVI
             Thread t = new Thread(new ParameterizedThreadStart(Add));
             t.Start(ap);
             //waits for thread to finsih using AutoResetEven class
-            waitHandle.WaitOne(); 
-            Console.WriteLine("Other thread is done!");  
+            waitHandle.WaitOne();
+            Console.WriteLine("Other thread is done!");
 
             Console.ReadLine(); //Page 765
         }
-        static void O6()
+
+        private static void O6()
         {
             Console.WriteLine("***** Background Threads *****\n");
             Printer p = new Printer();
@@ -144,7 +152,8 @@ namespace PartVI
                 bgroundThread.Start();
             };
         }
-        static void O7()
+
+        private static void O7()
         {
             Console.WriteLine("*****Synchronizing Threads *****\n");
             var p = new Printer();
@@ -157,12 +166,27 @@ namespace PartVI
             }
             foreach (Thread t in threads)
                 t.Start();
+            Thread.Sleep(3000);
+            threads = null;
             Console.ReadLine();
-            List<Thread> o = 
+            //List<Thread> o = threads.ToList();
+            //o.AsParallel().ForAll(x => x.Start());
+            //Console.ReadLine();
+            //Page 773
         }
-        static void O8()
+
+        private static void O8()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("***** Working with Timer type *****\n");
+            // Create the delegate for the Timer type.
+            TimerCallback timeCB = new TimerCallback(PrintTime);
+            System.Threading.Timer t = new System.Threading.Timer(
+                 timeCB, // The TimerCallback delegate object.
+                 "Hello From Main", // Any info to pass into the called method (null for no info).
+                 0, // Amount of time to wait before starting (in milliseconds).
+                 1000); // Interval of time between calls (in milliseconds).)
+            Console.WriteLine("Hit key to terminate...");
+            Console.ReadLine();
         }
     }
 }

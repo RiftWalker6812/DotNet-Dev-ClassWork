@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Runtime.Remoting.Messaging;
+using System.Runtime.Remoting.Contexts;
 
 namespace PartVI
 {
@@ -46,18 +47,22 @@ namespace PartVI
         static AutoResetEvent waitHandle = new AutoResetEvent(false);
         class Printer
         {
+            private object threadLock = new object();
             public void PrintNumbers()
             {
-                Console.WriteLine(("-> {0} is executing PrintNumbers()", Thread.CurrentThread.Name));
-
-                Console.Write("Your numbers: ");
-                for (int i = 0; i < 10; i++)
+                lock (threadLock)
                 {
-                    Random r = new Random();
-                    Thread.Sleep(100 * r.Next(5));
-                    Console.Write("{0}, ", i);
+                    Console.WriteLine(("-> {0} is executing PrintNumbers()", Thread.CurrentThread.Name));
+
+                    Console.Write("Your numbers: ");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Random r = new Random();
+                        Thread.Sleep(100 * r.Next(5));
+                        Console.Write("{0}, ", i);
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
         }
         class AddParams
@@ -65,5 +70,45 @@ namespace PartVI
             public int a, b;
             public AddParams(int numb1, int numb2) => (a, b) = (numb1, numb2);
         }
+        object myLockToken = new object();
+        int intVal, myInt, iVal;
+        void AddOne() 
+        {
+            int newVal = Interlocked.Increment(ref intVal);
+        }
+        void SafeAddignment()
+        {
+            Interlocked.Exchange(ref myInt, 83);
+        }
+        void CompareAndExchange()
+        {
+            Interlocked.CompareExchange(ref iVal, 00, 83);
+        }
+
+        [Synchronization]
+        class Printer2 : ContextBoundObject
+        {
+            private object threadLock = new object();
+            public void PrintNumbers()
+            {
+                lock (threadLock)
+                {
+                    Console.WriteLine(("-> {0} is executing PrintNumbers()", Thread.CurrentThread.Name));
+
+                    Console.Write("Your numbers: ");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Random r = new Random();
+                        Thread.Sleep(100 * r.Next(5));
+                        Console.Write("{0}, ", i);
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
+
+        static void PrintTime(object state) =>
+            Console.WriteLine("Time is: {0}, Param is: {1}",
+                DateTime.Now.ToLongTimeString(), state.ToString());
     }
 }
