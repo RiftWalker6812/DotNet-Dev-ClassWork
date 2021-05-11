@@ -110,5 +110,12 @@ namespace PartVI
         static void PrintTime(object state) =>
             Console.WriteLine("Time is: {0}, Param is: {1}",
                 DateTime.Now.ToLongTimeString(), state.ToString());
+
+        static void PrintTheNumbers(object state)
+        {
+            Printer2 task = state as Printer2;
+            task.PrintNumbers();
+        }
+
     }
 }

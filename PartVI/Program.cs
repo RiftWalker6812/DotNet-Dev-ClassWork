@@ -17,7 +17,11 @@ namespace PartVI
             //O5(); //Operation 5
             //O6(); //Operation 6
             //O7(); //Operation 7
-            O8(); //Operation 8
+            //O8(); //Operation 8
+            O9(); //Operation 9
+            //O10(); //Operation 10
+            //O11(); //Operation 11
+            //O12(); //Operation 12
         }
 
         private delegate int BinaryOp(int x, int y);
@@ -187,6 +191,33 @@ namespace PartVI
                  1000); // Interval of time between calls (in milliseconds).)
             Console.WriteLine("Hit key to terminate...");
             Console.ReadLine();
+        }
+        private static void O9()
+        {
+            Console.WriteLine("***** Fun with the CLR Thread Pool *****\n");
+            Console.WriteLine("Main thread started. ThreadID = {0}",
+                Thread.CurrentThread.ManagedThreadId);
+            
+            Printer2 p = new Printer2();
+            
+            WaitCallback workItem = new WaitCallback(PrintTheNumbers);
+
+            for (int i = 0; i < 10; i++)
+                ThreadPool.QueueUserWorkItem(workItem, p);
+            Console.WriteLine("All tasks queued");
+            Console.ReadLine();
+        }
+        private static void O10()
+        {
+
+        }
+        private static void O11()
+        {
+
+        }
+        private static void O12()
+        {
+
         }
     }
 }

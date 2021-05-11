@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartV", "..\PartV\PartV.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartVI", "..\PartVI\PartVI.csproj", "{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadingTasks", "..\MultiThreadingTasks\MultiThreadingTasks.csproj", "{47CDE59E-7375-472A-B15E-8364D25420AD}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Book4Shared.projitems*{28a2b639-9f5b-4fdc-8709-5c887c48193c}*SharedItemsImports = 13
@@ -50,6 +52,10 @@ Global
 		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE6EBC0A-1C44-4859-8174-1B3514E0C72A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47CDE59E-7375-472A-B15E-8364D25420AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CDE59E-7375-472A-B15E-8364D25420AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CDE59E-7375-472A-B15E-8364D25420AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CDE59E-7375-472A-B15E-8364D25420AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
