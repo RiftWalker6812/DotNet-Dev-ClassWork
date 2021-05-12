@@ -29,13 +29,34 @@ namespace MultiThreadingTasks
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnProcessImages = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnProcessImages
+            // 
+            this.btnProcessImages.Location = new System.Drawing.Point(142, 115);
+            this.btnProcessImages.Name = "btnProcessImages";
+            this.btnProcessImages.Size = new System.Drawing.Size(78, 49);
+            this.btnProcessImages.TabIndex = 0;
+            this.btnProcessImages.Text = "Process Images";
+            this.btnProcessImages.UseVisualStyleBackColor = true;
+            this.btnProcessImages.Click += new System.EventHandler(this.btnProcessImages_Click);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(371, 303);
+            this.Controls.Add(this.btnProcessImages);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnProcessImages;
     }
 }
 
