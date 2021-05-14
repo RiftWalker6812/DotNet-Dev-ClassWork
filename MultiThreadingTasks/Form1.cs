@@ -58,5 +58,19 @@ namespace MultiThreadingTasks
         {
             cancelToken.Cancel();
         }//789
+
+        private void btnExecute_Click(object sender, EventArgs e) => Task.Factory.StartNew(ProcessIntData);
+
+        private void ProcessIntData()
+        {
+            int[] source = Enumerable.Range(1, 10000000).ToArray(), modThreeIsZero = (from num 
+                                                                                      in source.AsParallel()
+                                                                                      where num % 3 is 0
+                                                                                      orderby num descending
+                                                                                      select num).ToArray();
+            MessageBox.Show(string.Format("Found {0} numbers that match query!",
+                modThreeIsZero.Length));
+            GC.Collect();
+        }
     }
 }

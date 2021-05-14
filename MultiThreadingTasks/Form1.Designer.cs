@@ -31,11 +31,12 @@ namespace MultiThreadingTasks
         {
             this.btnProcessImages = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnExecute = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnProcessImages
             // 
-            this.btnProcessImages.Location = new System.Drawing.Point(142, 115);
+            this.btnProcessImages.Location = new System.Drawing.Point(28, 91);
             this.btnProcessImages.Name = "btnProcessImages";
             this.btnProcessImages.Size = new System.Drawing.Size(78, 49);
             this.btnProcessImages.TabIndex = 0;
@@ -45,7 +46,7 @@ namespace MultiThreadingTasks
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(142, 170);
+            this.btnCancel.Location = new System.Drawing.Point(28, 146);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(78, 49);
             this.btnCancel.TabIndex = 1;
@@ -53,11 +54,22 @@ namespace MultiThreadingTasks
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // btnExecute
+            // 
+            this.btnExecute.Location = new System.Drawing.Point(148, 91);
+            this.btnExecute.Name = "btnExecute";
+            this.btnExecute.Size = new System.Drawing.Size(78, 49);
+            this.btnExecute.TabIndex = 2;
+            this.btnExecute.Text = "Execute";
+            this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 303);
+            this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnProcessImages);
             this.Name = "Form1";
@@ -70,6 +82,7 @@ namespace MultiThreadingTasks
 
         private System.Windows.Forms.Button btnProcessImages;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnExecute;
     }
 }
 
