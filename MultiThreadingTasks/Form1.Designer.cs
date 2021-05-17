@@ -32,6 +32,7 @@ namespace MultiThreadingTasks
             this.btnProcessImages = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
+            this.btnCallMethod = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnProcessImages
@@ -64,11 +65,22 @@ namespace MultiThreadingTasks
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
+            // btnCallMethod
+            // 
+            this.btnCallMethod.Location = new System.Drawing.Point(148, 146);
+            this.btnCallMethod.Name = "btnCallMethod";
+            this.btnCallMethod.Size = new System.Drawing.Size(78, 49);
+            this.btnCallMethod.TabIndex = 3;
+            this.btnCallMethod.Text = "Method Call";
+            this.btnCallMethod.UseVisualStyleBackColor = true;
+            this.btnCallMethod.Click += new System.EventHandler(this.btnCallMethod_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 303);
+            this.Controls.Add(this.btnCallMethod);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnProcessImages);
@@ -83,6 +95,7 @@ namespace MultiThreadingTasks
         private System.Windows.Forms.Button btnProcessImages;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnExecute;
+        private System.Windows.Forms.Button btnCallMethod;
     }
 }
 

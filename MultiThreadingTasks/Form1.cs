@@ -63,14 +63,57 @@ namespace MultiThreadingTasks
 
         private void ProcessIntData()
         {
-            int[] source = Enumerable.Range(1, 10000000).ToArray(), modThreeIsZero = (from num 
-                                                                                      in source.AsParallel()
-                                                                                      where num % 3 is 0
-                                                                                      orderby num descending
-                                                                                      select num).ToArray();
-            MessageBox.Show(string.Format("Found {0} numbers that match query!",
-                modThreeIsZero.Length));
-            GC.Collect();
+            int[] source = Enumerable.Range(1, 10000000).ToArray(), modThreeIsZero = null;
+            try
+            {
+                modThreeIsZero = (from num
+                                  in source.AsParallel().WithCancellation(cancelToken.Token)
+                                  where num % 3 is 0
+                                  orderby num descending
+                                  select num).ToArray();
+                MessageBox.Show(string.Format("Found {0} numbers that match query!",
+                    modThreeIsZero.Length));
+                GC.Collect();
+            }
+            catch (OperationCanceledException ex) { Invoke((Action)delegate { Text = ex.Message; }); }
+        }
+
+        private async void btnCallMethod_Click(object sender, EventArgs e)
+        {
+            Text = await DoWork();
+            Text = await DoWorkAsync();
+            await MethodReturningVoidAsync();
+            MessageBox.Show("Done!");
+            multiAwaits();
+
+            static Task<string> DoWork()
+            {
+                return Task.Run(() =>
+                {
+                    Thread.Sleep(10000);
+                    return "Done with work!";
+                });
+            }
+            static async Task<string> DoWorkAsync()
+            {
+                return await Task.Run(() =>
+                {
+                    Thread.Sleep(10000);
+                    return "Done with work! (2)";
+                });
+            }
+            static async Task MethodReturningVoidAsync() 
+                => await Task.Run(() 
+                    => Thread.Sleep(4000));
+            static async void multiAwaits()
+            {
+                await Task.Run(() => { Thread.Sleep(2000); });
+                MessageBox.Show("Done with first task!");
+                await Task.Run(() => { Thread.Sleep(2000); });
+                MessageBox.Show("Done with second task!");
+                await Task.Run(() => { Thread.Sleep(2000); });
+                MessageBox.Show("Done with third task!");
+            }
         }
     }
 }

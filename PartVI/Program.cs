@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace PartVI
 {
@@ -18,10 +19,8 @@ namespace PartVI
             //O6(); //Operation 6
             //O7(); //Operation 7
             //O8(); //Operation 8
-            O9(); //Operation 9
-            //O10(); //Operation 10
-            //O11(); //Operation 11
-            //O12(); //Operation 12
+            //O9(); //Operation 9
+            O10(); //Operation 10
         }
 
         private delegate int BinaryOp(int x, int y);
@@ -209,15 +208,8 @@ namespace PartVI
         }
         private static void O10()
         {
-
-        }
-        private static void O11()
-        {
-
-        }
-        private static void O12()
-        {
-
+            AddSync();
+            Console.ReadLine();
         }
     }
 }

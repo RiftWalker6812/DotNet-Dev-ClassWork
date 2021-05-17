@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 
 namespace PartVI
 {
@@ -117,5 +118,30 @@ namespace PartVI
             task.PrintNumbers();
         }
 
+        static async Task AddSync()
+        {
+            Console.WriteLine("***** Adding with Thread objects *****");
+            Console.WriteLine("ID of thread in Main(): {0}",
+            Thread.CurrentThread.ManagedThreadId);
+
+            AddParams ap = new AddParams(10, 10);
+            await Sum(ap);
+
+            Console.WriteLine("Other thread is done!");
+
+            async Task Sum(object data)
+            {
+                await Task.Run(() =>
+                {
+                    if (data is AddParams s)
+                    {
+                        Console.WriteLine("ID of thread in Add(): {0}",
+                            Thread.CurrentThread.ManagedThreadId);
+                        Console.WriteLine("{0} + {1} is {2}",
+                            s.a, s.b, s.a + s.b);
+                    }
+                });
+            }
+        }
     }
 }
