@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace PartVI
 {
@@ -10,17 +9,63 @@ namespace PartVI
         private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+        begin:
+            Console.WriteLine("1-10 Operations are available\nTo Select one type in the number and enter.");
 
-            //O1(); //Operation 1
-            //O2(); //Operation 2
-            //O3(); //Operation 3
-            //O4(); //Operation 4
-            //O5(); //Operation 5
-            //O6(); //Operation 6
-            //O7(); //Operation 7
-            //O8(); //Operation 8
-            //O9(); //Operation 9
-            O10(); //Operation 10
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    O1(); //Operation 1
+                    break;
+
+                case "2":
+                    O2(); //Operation 2
+                    break;
+
+                case "3":
+                    O3(); //Operation 3
+                    break;
+
+                case "4":
+                    O4(); //Operation 4
+                    break;
+
+                case "5":
+                    O5(); //Operation 5
+                    break;
+
+                case "6":
+                    O6(); //Operation 6
+                    break;
+
+                case "7":
+                    O7(); //Operation 7
+                    break;
+
+                case "8":
+                    O8(); //Operation 8
+                    break;
+
+                case "9":
+                    O9(); //Operation 9
+                    break;
+
+                case "10":
+                    O10(); //Operation 10
+                    break;
+
+                default:
+                    goto begin;
+            }
+
+        exitCon:
+            Console.WriteLine("\nWould you like to restart (Y) or end! (N)");
+            string option = Console.ReadLine().ToLower();
+            if (option is "y")
+                goto begin;
+            else if (!(option is "n"))
+                goto exitCon;
+            return;
         }
 
         private delegate int BinaryOp(int x, int y);
@@ -191,14 +236,15 @@ namespace PartVI
             Console.WriteLine("Hit key to terminate...");
             Console.ReadLine();
         }
+
         private static void O9()
         {
             Console.WriteLine("***** Fun with the CLR Thread Pool *****\n");
             Console.WriteLine("Main thread started. ThreadID = {0}",
                 Thread.CurrentThread.ManagedThreadId);
-            
+
             Printer2 p = new Printer2();
-            
+
             WaitCallback workItem = new WaitCallback(PrintTheNumbers);
 
             for (int i = 0; i < 10; i++)
@@ -206,6 +252,7 @@ namespace PartVI
             Console.WriteLine("All tasks queued");
             Console.ReadLine();
         }
+
         private static void O10()
         {
             AddSync();

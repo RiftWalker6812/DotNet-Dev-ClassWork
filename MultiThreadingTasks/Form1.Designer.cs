@@ -37,7 +37,7 @@ namespace MultiThreadingTasks
             // 
             // btnProcessImages
             // 
-            this.btnProcessImages.Location = new System.Drawing.Point(28, 91);
+            this.btnProcessImages.Location = new System.Drawing.Point(7, 12);
             this.btnProcessImages.Name = "btnProcessImages";
             this.btnProcessImages.Size = new System.Drawing.Size(78, 49);
             this.btnProcessImages.TabIndex = 0;
@@ -47,7 +47,7 @@ namespace MultiThreadingTasks
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(28, 146);
+            this.btnCancel.Location = new System.Drawing.Point(7, 67);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(78, 49);
             this.btnCancel.TabIndex = 1;
@@ -57,7 +57,7 @@ namespace MultiThreadingTasks
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(148, 91);
+            this.btnExecute.Location = new System.Drawing.Point(91, 12);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(78, 49);
             this.btnExecute.TabIndex = 2;
@@ -67,7 +67,7 @@ namespace MultiThreadingTasks
             // 
             // btnCallMethod
             // 
-            this.btnCallMethod.Location = new System.Drawing.Point(148, 146);
+            this.btnCallMethod.Location = new System.Drawing.Point(91, 67);
             this.btnCallMethod.Name = "btnCallMethod";
             this.btnCallMethod.Size = new System.Drawing.Size(78, 49);
             this.btnCallMethod.TabIndex = 3;
@@ -79,7 +79,7 @@ namespace MultiThreadingTasks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 303);
+            this.ClientSize = new System.Drawing.Size(177, 121);
             this.Controls.Add(this.btnCallMethod);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnCancel);
