@@ -1,0 +1,7 @@
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\bin\Release\PartVI.exe.config
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\bin\Release\PartVI.exe
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\bin\Release\PartVI.pdb
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\obj\Release\PartVI.csprojAssemblyReference.cache
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\obj\Release\PartVI.csproj.CoreCompileInputs.cache
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\obj\Release\PartVI.exe
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\PartVI\obj\Release\PartVI.pdb

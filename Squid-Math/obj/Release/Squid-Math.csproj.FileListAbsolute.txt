@@ -1,0 +1,7 @@
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\bin\Release\Squid-Math.dll.config
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\bin\Release\Squid-Math.dll
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\bin\Release\Squid-Math.pdb
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\obj\Release\Squid-Math.csprojAssemblyReference.cache
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\obj\Release\Squid-Math.csproj.CoreCompileInputs.cache
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\obj\Release\Squid-Math.dll
+C:\Users\studentam\Documents\Joshua Hernandez Work\2020-2021\STC Online\Book4\Squid-Math\obj\Release\Squid-Math.pdb

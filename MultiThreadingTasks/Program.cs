@@ -14,6 +14,7 @@ namespace MultiThreadingTasks
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("Hello");
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

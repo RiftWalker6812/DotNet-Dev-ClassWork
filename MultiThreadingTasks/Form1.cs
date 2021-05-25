@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-using System.IO;
 
 namespace MultiThreadingTasks
 {
@@ -48,7 +45,6 @@ namespace MultiThreadingTasks
             }
             catch (OperationCanceledException ex) { Invoke((Action)delegate { Text = ex.Message; }); }
         }
-
 
         private void btnProcessImages_Click(object sender, EventArgs e) => Task.Factory.StartNew(ProcessFiles);
 
@@ -102,8 +98,8 @@ namespace MultiThreadingTasks
                     return "Done with work! (2)";
                 });
             }
-            static async Task MethodReturningVoidAsync() 
-                => await Task.Run(() 
+            static async Task MethodReturningVoidAsync()
+                => await Task.Run(()
                     => Thread.Sleep(4000));
             static async void multiAwaits()
             {

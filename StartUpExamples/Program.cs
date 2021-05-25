@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace StartUpExamples
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Start:
+        Start:
             Console.WriteLine("Hello World!\nWelcome to startup Console!");
             Console.WriteLine("Begining Panel!");
 
             List<string> fileNames = new(3)
             {
-                "MultiThreadingTasks.exe",
+                "MultiThreadingTasks.exe.lnk",
                 "PartV.exe",
                 "PartVI.exe"
             }, FilePaths = new();
@@ -40,7 +38,7 @@ namespace StartUpExamples
             try
             {
                 using Process p = new();
-                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.UseShellExecute = Choice is ConsoleKey.D1;
                 p.StartInfo.FileName = FilePaths[whatWasSelected(Choice)];
                 p.StartInfo.CreateNoWindow = false;
                 p.Start();
@@ -75,7 +73,7 @@ namespace StartUpExamples
             {
                 "y" => true,
                 "n" => false,
-                _ => null
+                _ => null //is unecessary but I put it in any ways, alternative ("n" or _ => false)
             };
 
             bool tryAgain()
